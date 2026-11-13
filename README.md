@@ -26,3 +26,10 @@ Acronyms are handled greedily: `HTTPServer` -> `["http", "server"]`, not `["h", 
 "t", "p", "server"]`. Digits are treated as their own token when adjacent to letters
 (`file2Name` -> `["file", "2", "name"]`). Non-alphanumeric characters (underscores,
 dots, spaces) act as separators and are discarded. An empty string returns an empty list.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
